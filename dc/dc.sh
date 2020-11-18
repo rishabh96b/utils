@@ -59,12 +59,17 @@ showDiff() {
 	checkFile $2
 	local loadSource=$1
 	local loadTarget=$2
-	local source=$TEMP_FOLDER/source.log && touch $source
-	local target=$TEMP_FOLDER/target.log && touch $target
+
 	rm -rf $TEMP_FOLDER
 	mkdir $TEMP_FOLDER
+	
+	local source=$TEMP_FOLDER/source.log && touch $source
+	local target=$TEMP_FOLDER/target.log && touch $target
+
+	# filter the files by removing- stuff after [:,#,=], any whitespaces, empty lines
 	cat $loadSource | awk -F'[:#={{]' '!/^{{/ && length($1) > 0 { split($1, a, " "); print a[1] }' | awk /./ | sort >>$source
 	cat $loadTarget | awk -F'[:#={{]' '!/^{{/ && length($1) > 0 { split($1, a, " "); print a[1] }' | awk /./ | sort >>$target
+	
 	git diff --color $source $target
 	
 }
