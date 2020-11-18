@@ -63,8 +63,8 @@ showDiff() {
 	local target=$TEMP_FOLDER/target.log && touch $target
 	rm -rf $TEMP_FOLDER
 	mkdir $TEMP_FOLDER
-	cat "$loadSource" |  awk -F'[:#={{]' '!/^{{/ && length($1) > 0 { split($1, a, " "); print a[1] }' | awk /./ | sort >>$source
-	cat "$loadTarget" |  awk -F'[:#={{]' '!/^{{/ && length($1) > 0 { split($1, a, " "); print a[1] }' | awk /./ | sort >>$target
+	cat $loadSource | awk -F'[:#={{]' '!/^{{/ && length($1) > 0 { split($1, a, " "); print a[1] }' | awk /./ | sort >>$source
+	cat $loadTarget | awk -F'[:#={{]' '!/^{{/ && length($1) > 0 { split($1, a, " "); print a[1] }' | awk /./ | sort >>$target
 	git diff --color $source $target
 	
 }
