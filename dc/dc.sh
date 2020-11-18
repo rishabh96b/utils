@@ -48,6 +48,8 @@ checkFile() {
 	    echo "$FILE exists."
 	else 
 	    echo "Unable to locate file $FILE. Try again with correct path."
+	    echo ""
+	    help
 	    exit 1
 	fi
 	
